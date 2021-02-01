@@ -43,15 +43,15 @@ class PublishMessage:
         }.get(message_broker)
 
     @staticmethod
-    def publish_message(authenticator, conn, route_key, payload, exchange_type="direct", delivery_mode=2,
+    def publish_message(authenticator, route_key, payload, exchange_type="direct", delivery_mode=2,
                         exchange_name="wotnot.direct"):
         message_broker = PublishMessage.get_message_broker_handler(authenticator.config['MESSAGE_BROKER'])
-        message_broker.publish_message(conn=conn, route_key=route_key, payload=payload, exchange_name=exchange_name,
+        message_broker.publish_message(conn=authenticator.connection_pool, route_key=route_key, payload=payload, exchange_name=exchange_name,
                                        exchange_type=exchange_type, delivery_mode=delivery_mode)
 
     @staticmethod
-    def publish_message_in_bulk(authenticator, conn, payload, exchange_type="direct", delivery_mode=2,
+    def publish_message_in_bulk(authenticator, payload, exchange_type="direct", delivery_mode=2,
                                 exchange_name="wotnot.direct",):
         message_broker = PublishMessage.get_message_broker_handler(authenticator.config['MESSAGE_BROKER'])
-        message_broker.publish_message_in_bulk(conn=conn, payload=payload, exchange_type=exchange_type,
+        message_broker.publish_message_in_bulk(conn=authenticator.connection_pool, payload=payload, exchange_type=exchange_type,
                                        delivery_mode=delivery_mode, exchange_name=exchange_name)

@@ -1,4 +1,5 @@
 from WotNotMessageBroker.utility.utils import Messenger
+from WotNotMessageBroker.connect_message_broker import MessageBrokerPoolConnection
 
 _AMQP_URL = 'amqp://{user_name}:{password}@{host}:{port}/{vhost}?heartbeat={heart_beat}&retry_delay=5&connection_attempts=3'
 
@@ -9,6 +10,7 @@ def initialize_authentication_object(**kwargs):
     authenticator = Messenger()
     authenticator.config = create_config(**kwargs)
     create_message_broker_url(authenticator)
+    create_pool_connection(authenticator)
 
     return authenticator
 
@@ -54,3 +56,7 @@ def create_message_broker_url(authenticator):
             vhost="%2f",
             port=authenticator.config['MESSAGE_BROKER_PORT'],
             heart_beat=0)
+
+
+def create_pool_connection(authenticator):
+    authenticator.connection_pool = MessageBrokerPoolConnection.create_connection_pool(authenticator)
