@@ -11,7 +11,7 @@ setuptools.setup(
     description="This package will help to perform Rabbit MQ operations",
     long_description=long_description,
     long_description_content_type="text",
-    url="",
+    url="https://github.com/gaurang19990412/message-broker",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python >= 3.5",
